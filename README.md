@@ -5,7 +5,7 @@
   - `src/services/transaction.validation.service.js`
   - `src/services/transaction.storage.service.js`
   - `src/services/transaction.notification.service.js`
-- El controlador principal ahora inyecta dependencias por constructor en lugar de usar un monolito global.
+- El controlador principal ahora inyecta dependencias por constructor en lugar de usar uno global.
 
 ### 2. Seguridad JWT RS256
 - Completado `src/services/jwt.service.js` con:
@@ -17,8 +17,8 @@
   - `403` para tokens inválidos
 
 ### 3. Observabilidad y Sentry
-- Creado `src/instrument.js` y configurado como primera importación en `index.js`.
-- Integrado `@sentry/node` con `requestHandler` y `errorHandler`.
+- `src/instrument.js` creado y configurado como importación en `index.js`.
+- `@sentry/node` creado con `requestHandler` y `errorHandler`.
 - En `POST /v1/transfer-beta/execute`, se simula un error operacional con el payload `forceDatabaseFailure: true`, capturando el fallo en Sentry y etiquetando con `user.id` extraído del JWT.
 
 ## Archivos importantes
@@ -47,12 +47,6 @@
   "forceDatabaseFailure": true
 }
 ```
-
-## Capturas
-- Token JWT generado con `RS256` y expiración de 2 minutos.
-- Acceso válido a `GET /v1/account-alpha/balance` con cabecera `Authorization: Bearer <token>`.
-- Respuesta controlada `401`/`403` para tokens expirados o malformados.
-- Evento `500` en Sentry con tag `user.id` al provocar el fallo operacional.
 
 ### Capturas de Postman y Sentry
 
